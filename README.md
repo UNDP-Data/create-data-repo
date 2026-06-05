@@ -1,8 +1,8 @@
-# 🏗️ UNDP Create Data Repo CLI ![npm](https://img.shields.io/npm/v/@undp/create-app)
+# 🏗️ UNDP Create Data Repo CLI ![npm](https://img.shields.io/npm/v/@undp/create-data-repo)
 
 **`@undp/create-data-repo`** is UNDP’s official **scaffolding tool** for quickly bootstrapping data repository.
 
-[NPM Package](https://www.npmjs.com/package/@undp/create-app)
+[NPM Package](https://www.npmjs.com/package/@undp/create-data-repo)
 
 ---
 
