@@ -1,6 +1,6 @@
 {
   "name": "@undp/create-data-repo",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "UNDP's data repo scaffolding tool",
   "bin": {
     "create-data-repo": "./bin/index.js"
