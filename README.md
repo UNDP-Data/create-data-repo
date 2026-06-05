@@ -8,16 +8,9 @@
 
 ## 🚀 Features
 
-- ⚛️ **React + TypeScript** setup out of the box  
-- 🖌️ Includes **Tailwind CSS** for styling  
-- 🗂️ Includes **Zustand** for state management  
-- 🚀 **Vite support** for fast SPA development, including optional **routing** with **Tanstack router**
-- 🌐 **Next.js support** for full-stack apps, including optional **authentication** with **Better Auth**  
-- 🎨 Preconfigured for **UNDP’s Design System**  
-- ⚡️ Optional integration with **Tanstack query** for data fetching  
-- 📊 Optional integration with **@undp/data-viz** for interactive data visualization  
-- 🌐 Optional integration with **i18next** for internationalization  
-- ✨ **Biome** preconfigured for consistent code style  
+- 🗂️ Copies and create a repo with multiple data files
+- ⚡️ Automatically creates schema for `csv` and `json` files
+- 🚀 Create a github action for validation which run on every commit to make sure the updated data files match the schema 
 
 ---
 
