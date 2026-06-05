@@ -1,5 +1,5 @@
-# 📦 Data Repository Template
-This repository serves as a template for organizing and managing data files across projects. It provides a standardized structure for storing, validating, and sharing datasets effectively.
+# 📦 Data Repository
+This data repository organizes and manages data files. It provides a standardized structure for storing, validating, and sharing datasets effectively.
 
 __[Log file](./validation.log)__
 
