@@ -1,0 +1,107 @@
+name: Validate Data Sheet
+
+on:
+  push:
+    paths:
+      - 'data/*.csv'
+      - 'data/*.json'
+      - 'data/*.xlsx'
+      - 'data/*.xls'
+      - 'schema/*.json'
+  pull_request:
+    paths:
+      - 'data/*.csv'
+      - 'data/*.json'
+      - 'data/*.xlsx'
+      - 'data/*.xls'
+      - 'schema/*.json'
+
+permissions:
+  contents: write
+
+jobs:
+  validate-data:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Fetch full history to ensure we have access to previous commits
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.0.0'
+
+      - name: Install dependencies
+        run: |
+          cd validation
+          npm install
+
+      - name: Run validation and revert on failure
+        run: |
+          cd validation
+          if ! node validate.js; then
+            cd ..
+            echo "❌ Validation failed. Reverting modified data files..."
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            
+            # Debug: Show current commit info
+            echo
+            echo "Current commit: $(git rev-parse HEAD)"
+            echo "Previous commit: $(git rev-parse HEAD^)"
+            echo
+            
+            # Find data files that were changed in the last commit
+            DATA_FILES=$(git diff --name-only HEAD^ HEAD | grep -E '^data/.*\.(csv|json|xlsx|xls)$' || true)
+            
+            if [ -z "$DATA_FILES" ]; then
+              echo
+              echo "No data files (CSV, JSON, XLSX, XLS) found in data folder in last commit"
+              # Show all files that changed for debugging
+              echo
+              echo "Files changed in last commit:"
+              git diff --name-only HEAD^ HEAD
+              echo
+              exit 1
+            fi
+            
+            echo "Reverting these data files:"
+            echo "$DATA_FILES"
+            
+            # Revert only the data files to their previous state
+            for file in $DATA_FILES; do
+              echo
+              echo "Reverting $file"
+              git checkout HEAD^ -- "$file"
+              echo
+            done
+            
+            # Commit the reverted data files and add/update logs
+            echo
+            git add validation.log
+            git add data/*.csv data/*.json data/*.xlsx data/*.xls 2>/dev/null || true
+            git commit -m "Revert data files due to validation failure + Add/update logs"
+            git push origin HEAD
+            exit 1  # Fail the workflow
+          else
+            cd ..
+            echo "✅ Validation passed!"
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            
+            # Only commit if validation.log exists and has changes
+            if [ -f validation.log ]; then
+              git add validation.log
+              if ! git diff --cached --quiet; then
+                git commit -m "Add/update logs"
+                git push origin HEAD
+                echo "📝 Validation logs committed"
+              else
+                echo "📝 No changes to commit"
+              fi
+            else
+              echo "📝 No validation log to commit"
+            fi
+            exit 0  # Successful workflow
+          fi

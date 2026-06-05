@@ -1,0 +1,38 @@
+{
+  "name": "@undp/create-data-repo",
+  "version": "0.1.0",
+  "description": "UNDP's data repo scaffolding tool",
+  "bin": {
+    "create-data-repo": "./bin/index.js"
+  },
+  "scripts": {
+    "dev": "node ./bin/index.js"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "bin",
+    "dist",
+    "templates"
+  ],
+  "keywords": [
+    "UNDP",
+    "scaffold",
+    "generator",
+    "cli"
+  ],
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^15.0.0",
+    "fs-extra": "^11.1.0",
+    "inquirer": "^8.2.7",
+    "papaparse": "^5.5.3"
+  },
+  "author": "UNDP",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "@types/node": "^24.10.0"
+  }
+}

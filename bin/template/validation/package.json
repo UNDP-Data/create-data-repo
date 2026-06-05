@@ -1,0 +1,11 @@
+{
+  "name": "data-validation",
+  "version": "1.0.0",
+  "main": "validate.js",
+  "scripts": {
+    "validate": "node validate.js"
+  },
+  "dependencies": {
+    "@undp-data/data-utils": "^0.0.8"
+  }
+}
